@@ -16,4 +16,4 @@ Application Technical Details:
 
 **Application Downloadable apk**
 I have also uploaded an apk for your convinience
-You can download the apk from https://i.diawi.com/QXTfMH
+You can download the apk from https://i.diawi.com/v5eMd6
