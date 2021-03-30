@@ -32,7 +32,7 @@ class TransformersComparatorTest{
     fun `Optimus prime or predaking wins automatically`(){
         autobots[0].name = "Optimus Prime"
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(Constants.TEAM_AUTOBOT, result[0])
+        assert(result[Constants.TEAM_AUTOBOT]!!.size > result[Constants.TEAM_DECEPTICON]!!.size)
     }
 
     @Test
@@ -40,7 +40,7 @@ class TransformersComparatorTest{
         autobots[0].name = "Optimus Prime"
         decepticon[0].name = "Predaking"
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(0, result.size)
+        assertEquals(result.size, 0)
     }
 
     @Test
@@ -54,7 +54,7 @@ class TransformersComparatorTest{
             strength = 4
         }
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(Constants.TEAM_AUTOBOT, result[1])
+        assert(result[Constants.TEAM_AUTOBOT]!!.size > result[Constants.TEAM_DECEPTICON]!!.size)
     }
 
     @Test
@@ -68,7 +68,7 @@ class TransformersComparatorTest{
             strength = 4
         }
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(Constants.TEAM_DECEPTICON, result[1])
+        assert(result[Constants.TEAM_DECEPTICON]!!.size > result[Constants.TEAM_AUTOBOT]!!.size)
     }
 
     @Test
@@ -80,7 +80,7 @@ class TransformersComparatorTest{
             skill = 4
         }
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(Constants.TEAM_DECEPTICON, result[1])
+        assert(result[Constants.TEAM_DECEPTICON]!!.size > result[Constants.TEAM_AUTOBOT]!!.size)
     }
 
     @Test
@@ -100,7 +100,7 @@ class TransformersComparatorTest{
             firepower = 2
         }
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(Constants.TEAM_DECEPTICON, result[1])
+        assert(result[Constants.TEAM_DECEPTICON]!!.size > result[Constants.TEAM_AUTOBOT]!!.size)
     }
 
     @Test
@@ -120,6 +120,7 @@ class TransformersComparatorTest{
             firepower = 2
         }
         val result = TransformersComparator.decideWinner(autobots, decepticon)
-        assertEquals(Constants.DRAW, result[1])
+        assert(result[Constants.DRAW]!!.size > result[Constants.TEAM_AUTOBOT]!!.size)
+        assert(result[Constants.DRAW]!!.size > result[Constants.TEAM_DECEPTICON]!!.size)
     }
 }

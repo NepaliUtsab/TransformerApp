@@ -15,40 +15,47 @@ import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
+/**
+ * View Model for AddTransformerActivity and TransformerListActivity
+ * Using Hilt for Injecting repo, viewmodel, apiinterface
+ * @author Utsab Malakar
+ */
 @HiltViewModel
 class TransformerViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
     private val transformerRepo: TransformerRepo
 ) : ViewModel() {
 
-    var transformer = MutableLiveData<Transformer>()
 
+    //region private mutable objects initialization
     private var _transformers = MutableLiveData<List<Transformer>>()
     private var _userToken = MutableLiveData<String>()
+    //endregion private mutable objects initialization
 
+    //region observables mutable objects initialization
     var autobots = MutableLiveData<ArrayList<Transformer>>()
     var decepticons = MutableLiveData<ArrayList<Transformer>>()
-
+    var transformer = MutableLiveData<Transformer>()
     val winner = MutableLiveData<String>()
+    //endregion observables mutable objects initialization
 
-    lateinit var numberArray: List<Int>
+
     var transformers = _transformers
 
 
-//    Live data for api event responses
+//    region Live data for api event responses
     var isCreated = MutableLiveData<Boolean>()
     var isUpdatingModel = MutableLiveData<Boolean>()
     var isModelUpdated = MutableLiveData<Boolean>()
     var isModelDeleted = MutableLiveData<Boolean>()
     var isLoading = MutableLiveData<Boolean>()
     var errorOccured = MutableLiveData<Boolean>()
+    //endregion Live data for api event responses
 
 
     init {
         initLiveDatas()
         getApiKey()
-//        updateUiModel
 
     }
 
@@ -70,24 +77,84 @@ class TransformerViewModel @Inject constructor(
         } else getTransformersList()
     }
 
+    //region methods for ListActivity
+    fun getTransformerModelById() {
+        isUpdatingModel.postValue(true)
+        viewModelScope.launch {
+            transformerRepo.getTransformerById(_userToken.value, transformer.value!!.id).collect {
+                if (it.status == Result.Status.SUCCESS) {
+                    val transformerTemp = it.data as Transformer
+                    transformer.postValue(transformerTemp)
+                }
+            }
+        }
+    }
+    fun createAutobot() {
+        var autobot = Transformer()
+        autobot.team = Constants.TEAM_AUTOBOT
+        this.transformer.value = autobot
+    }
+
+    fun createDecepticon() {
+        var decepticon = Transformer()
+        decepticon.team = Constants.TEAM_DECEPTICON
+        this.transformer.value = decepticon
+    }
+
+    fun startBattle() {
+        val result = TransformersComparator.decideWinner(autobots.value!!, decepticons.value!!)
+        if (!result.isNullOrEmpty()) {
+            val survivingAutobots = result[Constants.TEAM_AUTOBOT]
+            val survivingDecepticons = result[Constants.TEAM_DECEPTICON]
+            val draw = result[Constants.DRAW]
+
+            when {
+                (survivingAutobots!!.size > survivingDecepticons!!.size
+                        && survivingAutobots.size > draw!!.size) -> {
+                    this.winner.postValue(Constants.TEAM_AUTOBOT)
+                }
+                (survivingDecepticons.size > survivingAutobots.size
+                        && survivingDecepticons.size > draw!!.size
+                        ) -> {
+                    this.winner.postValue(Constants.TEAM_DECEPTICON)
+                }
+                else -> {
+                    this.winner.postValue(Constants.DRAW)
+                }
+            }
+        } else this.winner.postValue(Constants.DRAW)
+        Log.e("WINNER", result.toString())
+
+    }
+    //endregion methods for ListActivity
+
+    //region methods for AddActivity
     fun getTransformersList() {
         val savedTransformers = getTransformerModel()
+        /*
+        * Checking if model is presend in saved handle
+        * */
         if (savedTransformers.isNotEmpty()) {
-            this._transformers.postValue(savedTransformers)
+            this.transformers.postValue(savedTransformers)
         }
         viewModelScope.launch {
+
             transformerRepo.getTransformers(_userToken.value).collect {
                 if (it.status == Result.Status.SUCCESS) {
-                    val transformerTemp = it.data as TransformerResponse
-
-                    _transformers.value = transformerTemp.transformers
-//                    _transformers.postValue(transformerTemp.transformers)
-
 
                     var autobotsList = arrayListOf<Transformer>()
                     var decepticonsList = arrayListOf<Transformer>()
+
+
+                    val transformerTemp = it.data as TransformerResponse
+                    _transformers.value = transformerTemp.transformers
+
                     transformers.postValue(_transformers.value)
 
+                    /**
+                     * Adding autobot and decepticon to their respective list
+                     * then updating the live data object for each list
+                     */
                     _transformers.value!!.forEach { new ->
                         when (new.team) {
                             Constants.TEAM_AUTOBOT -> {
@@ -96,33 +163,25 @@ class TransformerViewModel @Inject constructor(
                             else -> {
                                 decepticonsList.add(new)
                             }
-
                         }
-
                     }
+                    /**
+                     * Sorting each list on basis of overall rating
+                     */
                     autobotsList.sortByDescending { autobot ->
                         autobot.getRating()
                     }
                     decepticonsList.sortByDescending { autobot ->
                         autobot.getRating()
                     }
+
                     autobots.postValue(autobotsList)
                     decepticons.postValue(decepticonsList)
                     setTransformerModel()
 
 
-                }
-            }
-        }
-    }
-
-    fun getTransformerModelById() {
-        isUpdatingModel.postValue(true)
-        viewModelScope.launch {
-            transformerRepo.getTransformerById(_userToken.value, transformer.value!!.id).collect {
-                if (it.status == Result.Status.SUCCESS) {
-                    val transformerTemp = it.data as Transformer
-                    transformer.postValue(transformerTemp)
+                }else if (it.status == Result.Status.ERROR){
+                    errorOccured.postValue(true)
                 }
             }
         }
@@ -187,52 +246,6 @@ class TransformerViewModel @Inject constructor(
         }
     }
 
-    fun createAutobot() {
-        var autobot = Transformer()
-        autobot.team = Constants.TEAM_AUTOBOT
-        this.transformer.value = autobot
-    }
-
-    fun createDecepticon() {
-        var decepticon = Transformer()
-        decepticon.team = Constants.TEAM_DECEPTICON
-        this.transformer.value = decepticon
-    }
-
-    fun startBattle() {
-        val result = TransformersComparator.decideWinner(autobots.value!!, decepticons.value!!)
-        if (!result.isNullOrEmpty()) {
-            val survivingAutobots = result[Constants.TEAM_AUTOBOT]
-            val survivingDecepticons = result[Constants.TEAM_DECEPTICON]
-            val draw = result[Constants.DRAW]
-
-            when {
-                (survivingAutobots!!.size > survivingDecepticons!!.size
-                        && survivingAutobots.size > draw!!.size) -> {
-                    this.winner.postValue(Constants.TEAM_AUTOBOT)
-                }
-                (survivingDecepticons.size > survivingAutobots.size
-                        && survivingDecepticons.size > draw!!.size
-                        ) -> {
-                    this.winner.postValue(Constants.TEAM_DECEPTICON)
-                }
-                else -> {
-                    this.winner.postValue(Constants.DRAW)
-                }
-            }
-        } else this.winner.postValue(Constants.DRAW)
-        Log.e("WINNER", result.toString())
-
-    }
-
-    private fun setApiKey(userToken: String) {
-        savedStateHandle.set(Constants.USER_TOKEN, userToken)
-    }
-
-    private fun getUserToken(): String? {
-        return savedStateHandle.get(Constants.USER_TOKEN)
-    }
-
     private fun setTransformerModel() {
         savedStateHandle.set(Constants.TRANSFORMER_MODEL, Gson().toJson(transformers.value))
     }
@@ -248,6 +261,9 @@ class TransformerViewModel @Inject constructor(
         return arrayListOf()
 
     }
+    //endregion methods for AddActivity
+
+
 
 
 }

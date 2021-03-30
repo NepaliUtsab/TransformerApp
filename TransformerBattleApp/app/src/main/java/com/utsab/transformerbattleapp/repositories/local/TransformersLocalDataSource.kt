@@ -10,6 +10,9 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import java.lang.NullPointerException
 import javax.inject.Inject
 
+/**
+ * Using this for storing api key to shared prefence
+ */
 class TransformersLocalDataSource @Inject constructor(@ApplicationContext val context: Context) {
 
     private var PRIVATE_MODE = 0

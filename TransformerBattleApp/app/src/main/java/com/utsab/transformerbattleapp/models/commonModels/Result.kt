@@ -1,5 +1,9 @@
 package com.utsab.transformerbattleapp.models.commonModels
 
+/**
+ * Helper class for returning result type object
+ * Every data returned from repo in Result<>
+ */
 data class Result<out T>(val status: Status, val data: T?, val error: Error?, val message: String?){
     enum class Status {
         SUCCESS,

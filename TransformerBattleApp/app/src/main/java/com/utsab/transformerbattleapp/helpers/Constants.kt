@@ -1,15 +1,17 @@
 package com.utsab.transformerbattleapp.helpers
 
+/**
+ * For static datas and messages
+ */
 object Constants {
 
 
-
+//region API URLS
     const val BASE_URL = "https://transformers-api.firebaseapp.com"
-
     const val TOKEN_URL = "/allspark"
-
     const val GET_TRANSFORMERS_URL = "/transformers"
     const val UPDATE_TRANSFORMERS_URL = "/transformers/{transformerId}"
+    //endregion API URLS
 
 
     //Pref Constants

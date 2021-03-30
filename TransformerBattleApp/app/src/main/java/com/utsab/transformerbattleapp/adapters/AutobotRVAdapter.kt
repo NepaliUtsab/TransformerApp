@@ -10,6 +10,9 @@ import com.utsab.transformerbattleapp.databinding.ItemTransformerBinding
 import com.utsab.transformerbattleapp.helpers.clickListeners.AutobotClickNavigator
 import com.utsab.transformerbattleapp.models.Transformer
 
+/**
+ * Recycle view adapter for Autobot listing in TransformerListActivity
+ */
 class AutobotRVAdapter: RecyclerView.Adapter<AutobotRVAdapter.AutobotViewHolder>() {
 
     private var autobots: ArrayList<Transformer> = arrayListOf()

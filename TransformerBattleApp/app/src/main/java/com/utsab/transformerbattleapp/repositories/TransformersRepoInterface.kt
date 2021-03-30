@@ -5,6 +5,9 @@ import com.utsab.transformerbattleapp.models.TransformerResponse
 import com.utsab.transformerbattleapp.models.commonModels.Result
 import kotlinx.coroutines.flow.Flow
 
+/**
+ * Interface class for Repositories
+ */
 interface TransformersRepoInterface {
 
     suspend fun createTransformer(userToken: String, transformer: Transformer): Flow<Result<Transformer>>

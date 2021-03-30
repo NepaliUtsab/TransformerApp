@@ -17,6 +17,10 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
+/**
+ * Main Repository Class
+ * Responsible for fetching data from network or local source
+ */
 class TransformerRepo @Inject constructor(
     private val apiInterface: ApiInterface,
     private val localDataSource: TransformersLocalDataSource
@@ -24,6 +28,13 @@ class TransformerRepo @Inject constructor(
 
     private val TAG = TransformerRepo::class.simpleName
 
+    /**
+     * Creates a new transformer
+     * @param userToken String
+     * @param transformer Transformer model
+     *
+     * @return Flow<Result<Transformer>>
+     */
     override suspend fun createTransformer(
         userToken: String,
         transformer: Transformer
@@ -44,7 +55,12 @@ class TransformerRepo @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-
+    /**
+     * Gets all created transformers from Api a new transformer
+     * @param userToken String
+     *
+     * @return Flow<Result<TransformerResponse>>
+     */
     override suspend fun getTransformers(token: String?): Flow<Result<TransformerResponse>> {
         return flow {
 
@@ -106,6 +122,12 @@ class TransformerRepo @Inject constructor(
         }
     }
 
+    /**
+     * Deleted the selected transformer from api
+     * @param userToken String
+     * @param id String of transformer to be deleted
+     * @return Flow<Result<TransformerResponse>>
+     */
     override suspend fun deleteTransformer(userToken: String?, id: String): Flow<Result<Boolean>> {
         return flow {
 
@@ -124,6 +146,12 @@ class TransformerRepo @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    /**
+     * Updates the selected transformer to Api
+     * @param userToken String
+     * @param transformer Used changed model
+     * @return Flow<Result<Boolean>>
+     */
     override suspend fun updateTransformer(
         userToken: String?,
         transformer: Transformer
@@ -145,6 +173,12 @@ class TransformerRepo @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
+    /**
+     * Gets transformer by ID from Api
+     * @param userToken String
+     *@param id String
+     * @return Flow<Result<Transformer>>
+     */
     override suspend fun getTransformerById(
         userToken: String?,
         id: String
@@ -166,7 +200,9 @@ class TransformerRepo @Inject constructor(
         }.flowOn(Dispatchers.IO)
     }
 
-
+    /**
+     * Get saved token from preference
+     */
     fun getTokenFromPref(): Result<String> {
         return localDataSource.getUserToken()
     }

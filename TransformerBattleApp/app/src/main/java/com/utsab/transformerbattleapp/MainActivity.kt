@@ -12,16 +12,14 @@ import com.utsab.transformerbattleapp.databinding.ActivityMainBinding
 import com.utsab.transformerbattleapp.viewModels.TransformersTokenViewModel
 import com.utsab.transformerbattleapp.views.TransformerListActivity
 import dagger.hilt.android.AndroidEntryPoint
-
-
+//
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
-    //    private val viewModel by viewModels<TransformersViewModel>()
+//    region binding and viewmodel initialization
     private val viewModel: TransformersTokenViewModel by viewModels()
-
-
     private lateinit var binding: ActivityMainBinding
+//    endregion
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +31,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+
+    /**
+     * Observing for first time user
+     * Opens Transformer List Activity if user is not opening the application for first time
+     */
     private fun subscribeUi() {
         viewModel.isFirstTime.observe(this, Observer { result ->
             if (!result) TransformerListActivity.openTransformerListActivity(this@MainActivity)

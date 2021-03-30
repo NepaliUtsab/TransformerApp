@@ -11,18 +11,15 @@ import com.utsab.transformerbattleapp.helpers.clickListeners.AutobotClickNavigat
 import com.utsab.transformerbattleapp.helpers.clickListeners.DecepticonClickNavigator
 import com.utsab.transformerbattleapp.models.Transformer
 
+
+/**
+ * Recycle view adapter for Autobot listing in TransformerListActivity
+ */
 class DecepticonRVAdapter: RecyclerView.Adapter<DecepticonRVAdapter.DecepticonViewHolder>(){
 
     private var decepticons: ArrayList<Transformer> = arrayListOf()
     private lateinit var navigator : DecepticonClickNavigator
     fun addDecepticons(decepticons: List<Transformer>) {
-//        val size = this.decepticons.size
-//        for (decepticon in decepticons) {
-//            if (!this.decepticons.contains(decepticon)){
-//                this.decepticons.add(decepticon)
-//            }
-//        }
-//        notifyItemRangeInserted(size, decepticons.size)
         this.decepticons = decepticons as ArrayList<Transformer>
         notifyDataSetChanged()
     }

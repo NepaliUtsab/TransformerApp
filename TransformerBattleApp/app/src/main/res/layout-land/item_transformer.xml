@@ -30,9 +30,10 @@
             android:id="@+id/llTransformerDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_below="@+id/tvName"
             android:layout_margin="@dimen/margin_10"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:padding="@dimen/margin_10">
 
             <RelativeLayout
@@ -83,25 +84,27 @@
 
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/margin_5"
-                android:text="Stats:"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_17"
-                android:textStyle="italic|bold" />
-
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/margin_10">
 
                 <TextView
+                    android:id="@+id/tvStatLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_5"
+                    android:layout_alignParentTop="true"
+                    android:text="Stats:"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17"
+                    android:textStyle="italic|bold" />
+
+                <TextView
                     android:id="@+id/tvStrength"
                     style="@style/stats_text_view"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentTop="true"
+                    android:layout_below="@+id/tvStatLabel"
                     tools:text="Endurance: 10"
                     android:text="@{`Strength: ` + transformerModel.strength}" />
 

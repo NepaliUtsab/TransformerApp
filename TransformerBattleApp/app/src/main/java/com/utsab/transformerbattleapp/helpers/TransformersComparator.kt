@@ -3,6 +3,9 @@ package com.utsab.transformerbattleapp.helpers
 import com.utsab.transformerbattleapp.models.Transformer
 import com.utsab.transformerbattleapp.models.commonModels.Result
 
+/**
+ * Helper class for calculating winner for the battle
+ */
 object TransformersComparator {
 
     /*

@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,13 +17,15 @@ import com.utsab.transformerbattleapp.R
 import com.utsab.transformerbattleapp.adapters.AutobotRVAdapter
 import com.utsab.transformerbattleapp.adapters.DecepticonRVAdapter
 import com.utsab.transformerbattleapp.databinding.ActivityTransformerListBinding
-import com.utsab.transformerbattleapp.helpers.clickListeners.AutobotClickNavigator
 import com.utsab.transformerbattleapp.helpers.Constants
+import com.utsab.transformerbattleapp.helpers.clickListeners.AutobotClickNavigator
 import com.utsab.transformerbattleapp.helpers.clickListeners.DecepticonClickNavigator
-import com.utsab.transformerbattleapp.models.Transformer
 import com.utsab.transformerbattleapp.viewModels.TransformerViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * Activity for listing the autobot and decepticon, go to create activity, go to edit page, start battle
+ */
 @AndroidEntryPoint
 class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, DecepticonClickNavigator {
 
@@ -37,10 +38,9 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
 
     private val viewModel: TransformerViewModel by viewModels()
     private lateinit var binding: ActivityTransformerListBinding
+
     private lateinit var autobotAdapter: AutobotRVAdapter
     private lateinit var decepticonAdapter: DecepticonRVAdapter
-
-    var autobots = ArrayList<Transformer>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +62,7 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
 
 
     private fun subscribeUI() {
+//region  updating the empty autobot and decepticon placeholders and recycle view
         viewModel.autobots.observe(this, { result ->
             autobotAdapter.addAutobots(result)
             if (result.isNullOrEmpty()) {
@@ -87,11 +88,13 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
         viewModel.winner.observe(this, {winner ->
             showWinnerAlert(winner)
         })
+//endregion  updating the empty autobot and decepticon placeholders and recycle view
 
     }
 
     private fun showWinnerAlert(winner: String?) {
         val builder = AlertDialog.Builder(this)
+//        Displaying approprate message based on the result
         when(winner){
             Constants.TEAM_AUTOBOT -> builder.setMessage(R.string.winner_message_autobot)
             Constants.TEAM_DECEPTICON -> builder.setMessage(R.string.winner_message_decepticon)
@@ -141,31 +144,25 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
 
     }
 
-    fun addButtonClicked(view: View) {
-        when(view.id){
-            R.id.ibCreateAutobot -> {
-                viewModel.createAutobot()
-                AddTransformerActivity.openAddTransformerActivity(this, "", Constants.TEAM_AUTOBOT, viewModel.transformer.value!!.team_icon)
-            }
-            R.id.ibCreateDecepticon -> {
-                viewModel.createDecepticon()
-                AddTransformerActivity.openAddTransformerActivity(this, "", Constants.TEAM_DECEPTICON, viewModel.transformer.value!!.team_icon)
-            }
-        }
-    }
+
+    //region click_listeners
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.custom_menu, menu)
         return true
     }
+
+
     override fun onOptionsItemSelected(item: MenuItem) =  when(item.itemId) {
         R.id.action_battle -> {
+            /**
+             * Checking if both teams have at least one member to start a battle
+             */
             if(viewModel.autobots.value!!.size > 1 && viewModel.decepticons.value!!.size > 1){
-//                Toast.makeText(this@TransformerListActivity, "Battle can be started", Toast.LENGTH_LONG).show()
                 viewModel.startBattle()
                 true
             }else{
-//                Toast.makeText(this@TransformerListActivity, "Battle can't be started", Toast.LENGTH_LONG).show()
                 showWinnerAlert(Constants.NO_BATTLE)
                 false
             }
@@ -179,6 +176,7 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
         }
     }
 
+    //region click listener implementation for recycle view adapters
     override fun onAutobotEditButtonClicked(id: String, team: String, teamIcon: String) {
         AddTransformerActivity.openAddTransformerActivity(this, id, team, teamIcon)
     }
@@ -186,4 +184,21 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
     override fun onDecepticonEditButtonClicked(id: String, team: String, teamIcon: String) {
         AddTransformerActivity.openAddTransformerActivity(this, id, team, teamIcon)
     }
+
+    //endregion click listener implementation for recycle view adapters
+
+    fun addButtonClicked(view: View) {
+        when(view.id){
+            R.id.ibCreateAutobot -> {
+                viewModel.createAutobot()
+                AddTransformerActivity.openAddTransformerActivity(this, "", Constants.TEAM_AUTOBOT, viewModel.transformer.value!!.team_icon)
+            }
+            R.id.ibCreateDecepticon -> {
+                viewModel.createDecepticon()
+                AddTransformerActivity.openAddTransformerActivity(this, "", Constants.TEAM_DECEPTICON, viewModel.transformer.value!!.team_icon)
+            }
+        }
+    }
+
+    //endregion click listeners
 }
