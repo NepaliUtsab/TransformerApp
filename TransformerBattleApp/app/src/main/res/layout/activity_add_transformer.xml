@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <import type="com.utsab.transformerbattleapp.helpers.DataBindingUtilKt"/>
+        <import type="android.view.View"/>
+        <variable
+            name="viewModel"
+            type="com.utsab.transformerbattleapp.viewModels.TransformerViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.AddTransformerActivity">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"
+            android:layout_centerInParent="true"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:text="@{viewModel.isUpdatingModel ? `Edit Transformer` : `Create Transformer`}"
+            android:textStyle="bold"
+            android:textSize="@dimen/title_text"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentTop="true"/>
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTitle"
+            android:layout_margin="@dimen/margin_5"
+            android:text="@={viewModel.transformer.name}"
+            android:paddingLeft="@dimen/margin_10"
+            android:paddingRight="50dp"
+            android:textSize="@dimen/text_15"
+            android:textColorHint="@color/black"
+            android:hint="@string/transformer_name"/>
+
+        <ImageView
+            android:id="@+id/ivTrasformerIcon"
+            android:layout_width="@dimen/image_icon_200"
+            android:layout_height="@dimen/image_icon_200"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/margin_10"
+            android:background="@mipmap/ic_autobot"
+            android:layout_below="@+id/etName"/>
+
+        <TextView
+            android:id="@+id/tvTeam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:textSize="@dimen/text_15"
+            android:textColor="@{viewModel.transformer.team.equalsIgnoreCase(`A`) ? @color/autobot_primary : @color/decepticon_primary}"
+            android:text="@{viewModel.transformer.team.equalsIgnoreCase(`A`) ? `Team: ` + @string/autobot : `Team: ` + @string/decepticon}"
+            android:layout_below="@+id/etName"/>
+
+        <TextView
+            android:id="@+id/tvStats"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:textSize="@dimen/text_15"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Set Stat Points"
+            android:layout_below="@+id/tvTeam"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvStats"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvStrengthLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Strength"/>
+                <Spinner
+                    android:id="@+id/spStrength"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.strength)}"/>
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvSkillLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Skill"/>
+                <Spinner
+                    android:id="@+id/spSkill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.skill)}"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvCourageLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Courage"/>
+                <Spinner
+                    android:id="@+id/spCourage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.courage)}"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvIntelligenceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Intelligence"/>
+                <Spinner
+                    android:id="@+id/spIntelligence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.intelligence)}"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvSpeedLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Speed"/>
+                <Spinner
+                    android:id="@+id/spSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.speed)}"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvEnduranceLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Endurance"/>
+                <Spinner
+                    android:id="@+id/spEndurance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.endurance)}"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvFirePowerLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="FirePower"/>
+                <Spinner
+                    android:id="@+id/spFirePower"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.firepower)}"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/tvRankLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black"
+                    android:layout_margin="@dimen/margin_10"
+                    android:text="Rank"/>
+                <Spinner
+                    android:id="@+id/spRank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:entries="@array/stats"
+                    android:selectedItemPosition="@={DataBindingUtilKt.statToPosition(viewModel.transformer.rank)}"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_transformer"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/black"
+            android:visibility="@{viewModel.isUpdatingModel ? View.GONE : View.VISIBLE}"
+            android:clickable="@{etName.text.toString() == null ? false : true}"
+            android:onClick="@{() -> viewModel.createTransformer()}"
+            android:layout_margin="@dimen/margin_10"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="@{viewModel.isUpdatingModel ? View.VISIBLE : View.GONE}"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_transformer"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:clickable="@{etName.text.toString() == null ? false : true}"
+                android:onClick="@{() -> viewModel.updateTransformer()}"
+                android:layout_margin="@dimen/margin_10"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/delete_transformer"
+                android:backgroundTint="@color/white"
+                android:textColor="@color/black"
+                android:clickable="@{etName.text.toString() == null ? false : true}"
+                android:onClick="@{() -> viewModel.deleteTransformer()}"
+                android:layout_margin="@dimen/margin_10"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"/>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</layout>

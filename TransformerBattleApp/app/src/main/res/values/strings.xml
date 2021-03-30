@@ -1,3 +1,26 @@
 <resources>
-    <string name="app_name">TransformerBattleApp</string>
+    <string name="app_name">Transformers War</string>
+    <string name="main_title_text">Your Transformers</string>
+    <string name="decepticon_title">Decepticons</string>
+    <string name="autobot_title">Autobots</string>
+    <string name="add_transformer">Create</string>
+    <string name="create_page_title">Create your Transformer</string>
+    <string name="transformer_name">Transformer Name</string>
+    <string name="autobot">Autobot</string>
+    <string name="decepticon">Decepticon</string>
+    <string name="battle">Start Battle</string>
+    <string name="settings">settings</string>
+    <string name="txt_overall">Overall</string>
+    <string name="winner_title">The Battle Winner</string>
+    <string name="winner_message_autobot">The Battle has ended with AUTOBOTS as victorious.</string>
+    <string name="winner_message_decepticon">The DECEPTICONS were victorious in this battle.</string>
+    <string name="winner_message_draw">The battle has ended in DRAW. The world is at peace for now.</string>
+    <string name="dismiss">Dismiss</string>
+    <string name="update_transformer">Update</string>
+    <string name="delete_transformer">Delete</string>
+    <string name="welcome_title">The War is On</string>
+    <string name="welcome_message">Create your team of Autobots and Decepticons and start a war to determine the ultimate winners.</string>
+    <string name="error_message_no_battle">Must have at least one Autobot and one Decepticon to start a battle. Create your transformers and try again.</string>
+    <string name="empty_decepticons_message">Create your first Decepticon</string>
+    <string name="empty_autobot_message">Create your first Autobot</string>
 </resources>

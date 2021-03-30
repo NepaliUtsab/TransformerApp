@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".views.TransformerListActivity">
+
+        <TextView
+            android:id="@+id/tvScreenTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/main_title_text"
+            android:textColor="@color/black"
+            android:textSize="@dimen/title_text"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.050000012" />
+
+        <TextView
+            android:id="@+id/tvAutobotTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:text="@string/autobot_title"
+            android:textColor="@color/autobot_primary"
+            android:textSize="@dimen/section_title"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle" />
+
+        <ImageButton
+            android:id="@+id/ibCreateAutobot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:drawable/ic_menu_add"
+            android:backgroundTint="@color/autobot_dark"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:onClick="addButtonClicked"
+            app:layout_constraintBottom_toBottomOf="@+id/tvScreenTitle"
+            app:layout_constraintLeft_toRightOf="@+id/tvAutobotTitle"
+            app:layout_constraintTop_toTopOf="@+id/rvAutobots"
+            tools:layout_editor_absoluteX="5dp" />
+
+        <TextView
+            android:id="@+id/tvEmptyAutobotPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:text="@string/empty_autobot_message"
+            android:textColor="@color/black"
+            android:visibility="visible"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAutobotTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAutobots"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="invisible"
+            android:layout_margin="@dimen/margin_10"
+            app:layout_constraintEnd_toStartOf="@+id/rvDecepticons"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toEndOf="@+id/ibCreateAutobot"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvAutobotTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/item_transformer" />
+
+        <TextView
+            android:id="@+id/tvDeepticonTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:text="@string/decepticon_title"
+            android:textColor="@color/decepticon_primary"
+            android:textSize="@dimen/section_title"
+            android:textStyle="bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvScreenTitle" />
+
+        <ImageButton
+            android:id="@+id/ibCreateDecepticon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_5"
+            android:background="@android:drawable/ic_menu_add"
+            android:backgroundTint="@color/decepticon_primary"
+            android:onClick="addButtonClicked"
+            app:layout_constraintBottom_toBottomOf="@+id/tvScreenTitle"
+            app:layout_constraintRight_toLeftOf="@+id/tvDeepticonTitle"
+            android:layout_marginRight="@dimen/margin_10"
+            app:layout_constraintTop_toTopOf="@+id/rvDecepticons" />
+
+        <TextView
+            android:id="@+id/tvEmptyDecepticonPlaceholder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_10"
+            android:text="@string/empty_decepticons_message"
+            android:textColor="@color/black"
+            android:visibility="visible"
+            app:layout_constraintTop_toBottomOf="@+id/tvDeepticonTitle"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvDecepticons"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin_10"
+            android:visibility="invisible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/rvAutobots"
+            app:layout_constraintTop_toBottomOf="@+id/tvDeepticonTitle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/item_transformer" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

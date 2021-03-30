@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="transformerModel"
+            type="com.utsab.transformerbattleapp.models.Transformer" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlItems"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="true">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@{transformerModel.name}"
+            android:textColor="@{transformerModel.team.equalsIgnoreCase(`A`) ? @color/autobot_primary : @color/decepticon_primary}"
+            android:textSize="@dimen/transformer_name_text"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/llTransformerDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvName"
+            android:layout_margin="@dimen/margin_10"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_10">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvTeam"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Team: ` + transformerModel.team}"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17" />
+
+                <TextView
+                    android:id="@+id/tvOverall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tvTeam"
+                    android:text="@string/txt_overall"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/text_17" />
+
+                <TextView
+                    android:id="@+id/tvRating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/tvOverall"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:textSize="30sp" />
+
+
+                <ImageView
+                    android:id="@+id/ivTeamLogo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/image_icon"
+                    android:layout_toRightOf="@+id/tvTeam"
+                    android:layout_margin="@dimen/margin_10"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_5"
+                android:text="Stats:"
+                android:textColor="@color/black"
+                android:textSize="@dimen/text_17"
+                android:textStyle="italic|bold" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/margin_10">
+
+                <TextView
+                    android:id="@+id/tvStrength"
+                    style="@style/stats_text_view"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="@{`Strength: ` + transformerModel.strength}" />
+
+                <TextView
+                    android:id="@+id/tvSkill"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvStrength"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Skill: ` + transformerModel.skill}" />
+
+                <TextView
+                    android:id="@+id/tvCourage"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvSkill"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Courage: ` + transformerModel.courage}" />
+
+                <TextView
+                    android:id="@+id/tvIntelligence"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvCourage"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Intelligence: ` + transformerModel.intelligence}" />
+
+                <TextView
+                    android:id="@+id/tvSpeed"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvIntelligence"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Speed: ` + transformerModel.speed}" />
+
+                <TextView
+                    android:id="@+id/tvEndurance"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvSpeed"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Endurance: ` + transformerModel.endurance}" />
+
+                <TextView
+                    android:id="@+id/tvFirepower"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvEndurance"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`FirePower: ` + transformerModel.firepower}" />
+
+                <TextView
+                    android:id="@+id/tvRank"
+                    style="@style/stats_text_view"
+                    android:layout_below="@+id/tvFirepower"
+                    android:layout_alignParentLeft="true"
+                    android:text="@{`Rank: ` + transformerModel.rank}" />
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+</layout>
