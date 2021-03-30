@@ -114,6 +114,10 @@ class AddTransformerActivity : AppCompatActivity() {
             if (it) showAlert(Constants.UNKNOWN_FAILURE)
         })
 
+        viewModel.emptyModel.observe(this, {
+            if(it)  showAlert(Constants.EMPTY_NAME)
+        })
+
     }
 
     /**

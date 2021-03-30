@@ -50,6 +50,7 @@ class TransformerViewModel @Inject constructor(
     var isModelDeleted = MutableLiveData<Boolean>()
     var isLoading = MutableLiveData<Boolean>()
     var errorOccured = MutableLiveData<Boolean>()
+    var emptyModel = MutableLiveData<Boolean>()
     //endregion Live data for api event responses
 
 
@@ -66,6 +67,7 @@ class TransformerViewModel @Inject constructor(
         isModelDeleted.value = false
         isLoading.value = false
         errorOccured.value = false
+        emptyModel.value = false
     }
 
     private fun getApiKey() {
@@ -240,6 +242,7 @@ class TransformerViewModel @Inject constructor(
                         }
                         else -> {
                             isLoading.postValue(false)
+                            emptyModel.postValue(true)
                         }
                     }
                 }

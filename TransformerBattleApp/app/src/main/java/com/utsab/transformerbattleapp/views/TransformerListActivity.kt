@@ -159,7 +159,7 @@ class TransformerListActivity : AppCompatActivity(), AutobotClickNavigator, Dece
             /**
              * Checking if both teams have at least one member to start a battle
              */
-            if(viewModel.autobots.value!!.size > 1 && viewModel.decepticons.value!!.size > 1){
+            if(viewModel.autobots.value!!.size > 0 && viewModel.decepticons.value!!.size > 0){
                 viewModel.startBattle()
                 true
             }else{

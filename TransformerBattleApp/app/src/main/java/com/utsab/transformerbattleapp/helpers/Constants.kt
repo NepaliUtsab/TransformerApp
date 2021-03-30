@@ -6,7 +6,9 @@ package com.utsab.transformerbattleapp.helpers
 object Constants {
 
 
-//region API URLS
+
+
+    //region API URLS
     const val BASE_URL = "https://transformers-api.firebaseapp.com"
     const val TOKEN_URL = "/allspark"
     const val GET_TRANSFORMERS_URL = "/transformers"
@@ -25,6 +27,7 @@ object Constants {
     const val ALL_DESTROYED = "All Transformers were destroyed"
     const val UPDATED_SUCCESSFULLY = "Updated Successfully"
     const val CREATED_MESSAGE = "Transformer created successfully"
+    const val EMPTY_NAME = "Transformer Name cannot be empty"
 
     //    Teams
     const val TEAM_DECEPTICON = "D"
